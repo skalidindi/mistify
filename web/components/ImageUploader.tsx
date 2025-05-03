@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,7 +21,9 @@ const ImageUploader: React.FC = () => {
     setSigma(Number(e.target.value));
   };
 
-  const handleUpload = async () => {
+  const handleUpload = async (e: FormEvent) => {
+    e.preventDefault();
+
     if (!file) return;
 
     const formData = new FormData();
@@ -45,7 +47,7 @@ const ImageUploader: React.FC = () => {
   };
 
   return (
-    <div className="max-w-md p-4">
+    <form className="max-w-md p-4" onSubmit={handleUpload}>
       <Label
         htmlFor="file-upload"
         className="block text-sm font-medium text-gray-700"
@@ -74,7 +76,7 @@ const ImageUploader: React.FC = () => {
         max={250}
         className="mt-1 block w-full"
       />
-      <Button onClick={handleUpload} className="mt-4" disabled={!file}>
+      <Button type="submit" className="mt-4" disabled={!file}>
         Process Image
       </Button>
       {base64Image && (
@@ -91,7 +93,7 @@ const ImageUploader: React.FC = () => {
           <img src={base64Image} alt="Processed Image" className="mt-2" />
         </div>
       )}
-    </div>
+    </form>
   );
 };
 
