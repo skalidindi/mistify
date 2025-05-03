@@ -35,13 +35,13 @@ program
   )
   .requiredOption("-f, --file <path>", "Path to the image file")
   .requiredOption(
-    "-s, --size <number>",
-    "Size to resize the image to",
+    "-sigma, --sigma <number>",
+    "Sigma value for the blur effect",
     parseInt
   )
-  .action(async (options: { file: string; size: number }) => {
+  .action(async (options: { file: string; sigma: number }) => {
     try {
-      const { file, size } = options;
+      const { file, sigma } = options;
       const filePath = path.resolve(file);
 
       if (!fs.existsSync(filePath)) {
@@ -50,8 +50,7 @@ program
       }
 
       const { info, data } = await sharp(filePath)
-        .resize(size)
-        .blur()
+        .blur(sigma)
         .toBuffer({ resolveWithObject: true });
 
       const base64Image = `data:image/${info.format};base64,${data.toString(
