@@ -87,6 +87,7 @@ const ImageUploader: React.FC = () => {
             </Button>
           </div>
 
+          {/* eslint-disable @next/next/no-img-element */}
           <img src={base64Image} alt="Processed Image" className="mt-2" />
         </div>
       )}
